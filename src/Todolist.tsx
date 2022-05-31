@@ -1,5 +1,6 @@
 import React, {useState, KeyboardEvent, ChangeEvent} from 'react';
 import {FilterValuesType} from "./App";
+import AddItemForm from "./AddItemForm";
 
 type TodoListPropsType = {
     todoListID: string
@@ -19,9 +20,6 @@ export type TaskType = {
 }
 
 const TodoList = (props: TodoListPropsType) => {
-    const [title, setTitle] = useState<string>("")
-    const [error, setError] = useState<boolean>(false)
-
 
     const tasksJSXElements = props.tasks.length
         ? props.tasks.map(t => {
@@ -45,41 +43,28 @@ const TodoList = (props: TodoListPropsType) => {
         return () => props.changeTodoListFilter(filter, props.todoListID)
     }
     const addTask = () => {
-        const taskTitle = title.trim()
-        if(taskTitle){
-            props.addTask(taskTitle, props.todoListID)
-        } else {
-            setError(true)
-        }
-        setTitle("")
-    }
-    const onKeyDownAddTask  = (e: KeyboardEvent<HTMLInputElement>)=> e.key === "Enter" && addTask()
-    const onChangeSetTitle = (e: ChangeEvent<HTMLInputElement>)=> {
-        const taskTitle = e.currentTarget.value.trim()
-        setTitle(e.currentTarget.value)
-        if(error && taskTitle)setError(false)
-        if(!error && !taskTitle)setError(true)
+
     }
     const allBtnClasses = props.filter === "all" ? "active-filter" : ""
     const activeBtnClasses = props.filter === "active" ? "active-filter" : ""
     const completedBtnClasses = props.filter === "completed" ? "active-filter" : ""
-    const errorInputStyle = error ? {border: "2px solid red", outline: "none"} : undefined
 
     return (
         <div>
             <h3>{props.title}
                 <button onClick={()=>props.removeTodoList(props.todoListID)}>x</button>
             </h3>
-            <div>
-                <input
-                    style={errorInputStyle}
-                    value={title}
-                    onChange={onChangeSetTitle}
-                    onKeyDown={onKeyDownAddTask}
-                />
-                <button onClick={addTask}>+</button>
-                {error && <div style={{color: "red", fontWeight: "bold"}}>Title is required!</div>}
-            </div>
+            <AddItemForm addItem={addTask}/>
+            {/*<div>*/}
+            {/*    <input*/}
+            {/*        style={errorInputStyle}*/}
+            {/*        value={title}*/}
+            {/*        onChange={onChangeSetTitle}*/}
+            {/*        onKeyDown={onKeyDownAddTask}*/}
+            {/*    />*/}
+            {/*    <button onClick={addTask}>+</button>*/}
+            {/*    {error && <div style={{color: "red", fontWeight: "bold"}}>Title is required!</div>}*/}
+            {/*</div>*/}
             <ul>
                 {tasksJSXElements}
             </ul>
