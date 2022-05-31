@@ -25,7 +25,7 @@ const TodoList = (props: TodoListPropsType) => {
         ? props.tasks.map(t => {
             const removeTask = () => props.removeTask(t.id, props.todoListID)
             const changeStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(t.id, e.currentTarget.checked, props.todoListID)
-            const taskClasses = t.isDone ? "is-done" : "" ;
+            const taskClasses = t.isDone ? "is-done" : "";
             return (
                 <li key={t.id}>
                     <input
@@ -42,8 +42,8 @@ const TodoList = (props: TodoListPropsType) => {
     const changeFilter = (filter: FilterValuesType) => {
         return () => props.changeTodoListFilter(filter, props.todoListID)
     }
-    const addTask = () => {
-
+    const addTask = (title: string) => {
+        props.addTask(title, props.todoListID)
     }
     const allBtnClasses = props.filter === "all" ? "active-filter" : ""
     const activeBtnClasses = props.filter === "active" ? "active-filter" : ""
@@ -52,7 +52,7 @@ const TodoList = (props: TodoListPropsType) => {
     return (
         <div>
             <h3>{props.title}
-                <button onClick={()=>props.removeTodoList(props.todoListID)}>x</button>
+                <button onClick={() => props.removeTodoList(props.todoListID)}>x</button>
             </h3>
             <AddItemForm addItem={addTask}/>
             {/*<div>*/}
@@ -71,13 +71,16 @@ const TodoList = (props: TodoListPropsType) => {
             <div>
                 <button
                     className={allBtnClasses}
-                    onClick={changeFilter("all")}>All</button>
+                    onClick={changeFilter("all")}>All
+                </button>
                 <button
                     className={activeBtnClasses}
-                    onClick={changeFilter("active")}>Active</button>
+                    onClick={changeFilter("active")}>Active
+                </button>
                 <button
                     className={completedBtnClasses}
-                    onClick={changeFilter("completed")}>Completed</button>
+                    onClick={changeFilter("completed")}>Completed
+                </button>
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import './App.css';
 import TodoList, {TaskType} from "./Todolist";
 import {v1} from "uuid";
+import AddItemForm from "./AddItemForm";
 
 // CRUD -> GUI || CLI
 // create
@@ -74,6 +75,16 @@ function App() {
         setTodoLists(todoLists.filter(tl => tl.id !== todoListID))
         delete tasks[todoListID]
     }
+    const addTodoList = (title: string) => {
+        const newTodoListID = v1()
+        const newTodoList: TodoListType = {
+            id: newTodoListID,
+            title: title,
+            filter: "all"
+        }
+        setTodoLists([...todoLists, newTodoList])
+        setTasks({...tasks, [newTodoListID]: []})
+    }
     const getTasksForRender = (todoList: TodoListType) => {
         let tasksForRender = tasks[todoList.id]
         if (todoList.filter === "active") {
@@ -109,6 +120,7 @@ function App() {
     //GUI:
     return (
         <div className="App">
+            <AddItemForm addItem={addTodoList}/>
             {todoListsComponents}
         </div>
     );
