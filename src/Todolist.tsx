@@ -49,7 +49,7 @@ export function Todolist(props: PropsType) {
             </IconButton>
         </h3>
         <AddItemForm addItem={addTask}/>
-        <ul>
+        <div>
             {
                 props.tasks.map(t => {
                     const onClickHandler = () => props.removeTask(t.id, props.id)
@@ -62,7 +62,7 @@ export function Todolist(props: PropsType) {
                     }
 
 
-                    return <li key={t.id} className={t.isDone ? "is-done" : ""}>
+                    return <div key={t.id} className={t.isDone ? "is-done" : ""}>
                         {/*<input type="checkbox" onChange={onChangeHandler} checked={t.isDone}/>*/}
                         <Checkbox
                             onChange={onChangeHandler}
@@ -74,23 +74,24 @@ export function Todolist(props: PropsType) {
                         <IconButton onClick={onClickHandler}>
                             <Delete/>
                         </IconButton>
-                    </li>
+                    </div>
                 })
             }
-        </ul>
+        </div>
         <div>
             <Button variant={props.filter === 'all' ? "contained" : "text"}
                     onClick={onAllClickHandler}
+                    color="default"
             >All
             </Button>
             <Button variant={props.filter === 'active' ? "contained" : "text"}
                     onClick={onActiveClickHandler}
-                    color={'primary'}
+                    color="primary"
             >Active
             </Button>
             <Button variant={props.filter === 'completed' ? "contained" : "text"}
                     onClick={onCompletedClickHandler}
-                    color={'secondary'}
+                    color="secondary"
             >Completed
             </Button>
         </div>
